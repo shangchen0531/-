@@ -1,5 +1,6 @@
 package com.example.wechatimitation;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 
+        View recent_msg_view;
         NiceImageView niceImageView;
         TextView recentMsg;
         TextView recentTime;
@@ -28,6 +30,7 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder
 
         public ViewHolder(View view) {
             super(view);
+            recent_msg_view = view;
             niceImageView = (NiceImageView) view.findViewById(R.id.recent_contact_image);
             recentMsg = (TextView) view.findViewById(R.id.recent_message);
             recentName = (TextView) view.findViewById(R.id.recent_contact_name);
@@ -44,13 +47,31 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.recent_message_item, parent, false);
-        return new ViewHolder(view);
+        ViewHolder holder = new ViewHolder(view);
+
+        holder.recent_msg_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), Chatting.class);
+
+                String contact_name = holder.recentName.getText().toString();
+                int imageId = (int) holder.niceImageView.getTag(R.integer.id_key);
+
+                intent.putExtra("contactsName", contact_name);
+                intent.putExtra("contactsImage", imageId);
+
+                v.getContext().startActivity(intent);
+            }
+        });
+
+        return holder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Recent_Msg msg = msgList.get(position);
         holder.niceImageView.setImageResource(msg.getRecent_peo().getImageId());
+        holder.niceImageView.setTag(R.integer.id_key, msg.getRecent_peo().getImageId());
         holder.recentName.setText(msg.getRecent_peo().getName());
         holder.recentMsg.setText(msg.getRecent_msg().getContent());
         holder.recentTime.setText(dealTime(msg.getRecent_time()));
