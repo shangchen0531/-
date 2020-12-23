@@ -18,7 +18,7 @@ import java.net.URL;
 public class MainActivity extends AppCompatActivity {
 
     TextView responseText;
-    private final String IP = "10.4.90.167";
+    private final String IP = "118.89.245.32";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
                 HttpURLConnection connection = null;
                 BufferedReader reader = null;
                 try {
-                    URL url = new URL("http://" + IP + "/androidServer/index.php");
+                    URL url = new URL("http://" + IP + "/AndroidServer/index.php");
                     connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestMethod("GET");
                     connection.setConnectTimeout(8000);
