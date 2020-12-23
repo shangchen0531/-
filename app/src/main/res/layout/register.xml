@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
     android:orientation="vertical">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
-        android:text="取消"
+        android:text="返回"
         android:textSize="24sp"
         android:textColor="@color/colorCancel"
         android:id="@+id/btn_cancel"
@@ -22,7 +19,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="登录"
+        android:text="注册"
         android:textSize="35sp"
         android:textStyle="bold"
         android:textColor="#000"
@@ -32,24 +29,24 @@
 
     <LinearLayout
         style="@style/LoginLineLayout2"
-        android:layout_marginTop="50dp"
-        android:layout_marginBottom="5dp">
+        android:layout_width="300dp"
+        android:layout_marginTop="50dp">
         <LinearLayout
             style="@style/LoginLineLayout1">
 
             <TextView
                 style="@style/LoginTextView"
-                android:id="@+id/user_mark"
+                android:textSize="20sp"
                 android:text="账号:" />
 
             <EditText
                 android:singleLine="true"
                 android:layout_width="250dp"
-                android:layout_height="48dp"
+                android:layout_height="30dp"
                 android:background="@null"
                 android:layout_gravity="center_vertical"
-                android:textSize="24sp"
-                android:id="@+id/user_text" />
+                android:textSize="20sp"
+                android:id="@+id/userID_register" />
 
         </LinearLayout>
 
@@ -61,24 +58,26 @@
     </LinearLayout>
 
     <LinearLayout
-        style="@style/LoginLineLayout2">
+        style="@style/LoginLineLayout2"
+        android:layout_width="300dp"
+        android:layout_marginTop="5dp">
         <LinearLayout
             style="@style/LoginLineLayout1">
 
             <TextView
                 style="@style/LoginTextView"
-                android:id="@+id/pw_mark"
+                android:textSize="20sp"
                 android:text="密码:" />
 
             <EditText
                 android:singleLine="true"
                 android:layout_width="250dp"
-                android:layout_height="48dp"
+                android:layout_height="30dp"
                 android:background="@null"
                 android:layout_gravity="center_vertical"
-                android:textSize="24sp"
+                android:textSize="20sp"
                 android:inputType="textPassword"
-                android:id="@+id/pw_text" />
+                android:id="@+id/userPw_register" />
 
         </LinearLayout>
 
@@ -90,40 +89,45 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp">
+        style="@style/LoginLineLayout2"
+        android:layout_width="300dp"
+        android:layout_marginTop="5dp">
+        <LinearLayout
+            style="@style/LoginLineLayout1">
 
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scaleX="1.2"
-            android:scaleY="1.2"
-            android:layout_gravity="center_vertical"/>
+            <TextView
+                style="@style/LoginTextView"
+                android:textSize="20sp"
+                android:text="确认密码:" />
 
-        <CheckedTextView
-            android:layout_width="290dp"
-            android:layout_height="48dp"
-            android:layout_gravity="center_vertical"
-            android:text="记住密码"
-            android:textSize="25sp"
-            android:gravity="center_vertical"
-            android:paddingLeft="5dp"/>
+            <EditText
+                android:singleLine="true"
+                android:layout_width="250dp"
+                android:layout_height="30dp"
+                android:background="@null"
+                android:layout_gravity="center_vertical"
+                android:textSize="20sp"
+                android:inputType="textPassword"
+                android:id="@+id/userPw_sure_register" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#000"/>
 
     </LinearLayout>
-
-
 
     <Button
         android:layout_width="340dp"
         android:layout_height="50dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/shape"
-        android:text="登录"
+        android:text="注册"
         android:textSize="20sp"
         android:textColor="#fff"
-        android:id="@+id/login"
+        android:id="@+id/register_btn"
         android:layout_gravity="center_horizontal"
         android:gravity="center"/>
 
