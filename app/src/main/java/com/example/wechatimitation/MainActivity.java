@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
                 } else if (userIDText.compareTo(userID) == 0 && userPwText.compareTo(userPW) == 0) {
 //                    Toast.makeText(MainActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
 
-                    Intent contact = new Intent(MainActivity.this, Contacts.class);
+                    Intent contact = new Intent(MainActivity.this, recent_message.class);
                     startActivity(contact);
 
                 } else {
