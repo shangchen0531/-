@@ -1,5 +1,8 @@
 package com.example.wechatimitation;
 
+import android.content.Context;
+import android.widget.Toast;
+
 public class Msg {
 
     public static final int TYPE_RECEIVED = 0;
@@ -18,6 +21,12 @@ public class Msg {
 
     public int getType() {
         return type;
+    }
+
+    public static void showText(Context parent, String text) {
+        Toast tt = Toast.makeText(parent, text, Toast.LENGTH_SHORT);
+        tt.show();
+        tt = null;
     }
 
 }

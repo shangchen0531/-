@@ -4,18 +4,19 @@
     xmlns:custom="http://schemas.android.com/apk/res/com.example.wechatimitation"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:layout_marginTop="5dp">
 
     <com.example.wechatimitation.NiceImageView
         android:id="@+id/recent_contact_image"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="47dp"
+        android:layout_height="47dp"
         android:scaleType="centerCrop"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20sp"
         android:layout_gravity="center_vertical"
         custom:border_color="#000"
-        custom:corner_radius="10dp"
+        custom:corner_radius="5dp"
         android:src="@drawable/n1"/>
 
     <LinearLayout
@@ -29,8 +30,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/L1"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginBottom="11dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -41,15 +42,16 @@
                     android:id="@+id/recent_contact_name"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:textStyle="bold"
-                    android:text="ssssss"/>
+                    android:layout_marginBottom="1dp"
+                    android:text="朱一龙"/>
 
                 <TextView
                     android:id="@+id/recent_message"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp"
+                    android:textSize="13sp"
                     android:text="你好呀" />
 
             </LinearLayout>
@@ -69,8 +71,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/shaofen"
-            android:layout_marginTop="5dp"/>
+            android:background="@color/shaofen" />
 
     </LinearLayout>
 
