@@ -104,13 +104,24 @@
             android:layout_gravity="center_vertical"/>
 
         <CheckedTextView
-            android:layout_width="290dp"
+            android:layout_width="250dp"
             android:layout_height="48dp"
             android:layout_gravity="center_vertical"
             android:text="记住密码"
             android:textSize="25sp"
             android:gravity="center_vertical"
             android:paddingLeft="5dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:text="注册"
+            android:textSize="24sp"
+            android:textColor="@color/colorCancel"
+            android:id="@+id/btn_register"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"/>
 
     </LinearLayout>
 

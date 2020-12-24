@@ -14,6 +14,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -50,6 +52,17 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+
+        TextView register = (TextView) findViewById(R.id.btn_register);
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent register_intent = new Intent(MainActivity.this, Register.class);
+                startActivityForResult(register_intent, 1);
+            }
+        });
+
 
         Button login = (Button) findViewById(R.id.login);
         login.setOnClickListener(new View.OnClickListener() {
