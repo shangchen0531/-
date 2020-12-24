@@ -10,12 +10,11 @@
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/topAppBar"
-        android:background="@color/ash"
+        android:background="@color/purple_500"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:title="@string/page_title"
         app:menu="@menu/top_app_bar"
-        app:navigationIcon="@drawable/baseline_menu_white_24dp"
         style="@style/Widget.MaterialComponents.Toolbar.Primary"
         android:elevation="4dp" />
 

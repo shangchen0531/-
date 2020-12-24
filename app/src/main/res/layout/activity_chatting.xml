@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Chatting"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:fitsSystemWindows="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -43,31 +44,36 @@
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_weight="3"
             android:id="@+id/msg_recycler_view"
             android:background="@color/jiaoyu"/>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="50dp">
 
             <EditText
                 android:id="@+id/input_text"
                 android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:hint="Type something here"
+                android:layout_weight="2"
+                android:textSize="20sp"
+                android:layout_height="48dp"
+                android:layout_marginTop="7dp"
+                android:hint="输入聊天内容..."
                 android:maxLines="2"/>
 
             <Button
                 android:id="@+id/send"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Send" />
+                android:background="@drawable/shape"
+                android:layout_width="80dp"
+                android:layout_height="50dp"
+                android:textSize="20sp"
+                android:text="发送" />
 
         </LinearLayout>
 
     </LinearLayout>
+
 
 
 </LinearLayout>

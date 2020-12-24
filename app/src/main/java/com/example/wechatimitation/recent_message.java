@@ -53,23 +53,27 @@ public class recent_message extends AppCompatActivity {
 //        badge.setNumber(99999); // 设置消息数
 
         BottomNavigationView btw = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+
         btw.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @SuppressLint("NonConstantResourceId")
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
+                clearIcon(btw);
                 switch (id) {
                     case R.id.page_1:
-                        Msg.showText(mContext, "You click the page 1");
+                        // Msg.showText(mContext, "You click the page 1");
                         recyclerView.setAdapter(recentAdapter);
+                        item.setIcon(R.drawable.baseline_chat_bubble_24);
 //                        btw.setSelectedItemId(id);
                         return true;
                     case R.id.page_2:
-                        Msg.showText(mContext, "You click the page 2");
+                        // Msg.showText(mContext, "You click the page 2");
                         if (peoAdapter == null) {
                             peoAdapter = new PeoAdapter(peoList);
                         }
                         recyclerView.setAdapter(peoAdapter);
+                        item.setIcon(R.drawable.baseline_account_circle_24);
 //                        btw.setSelectedItemId(id);
                         return true;
                     default:
@@ -86,18 +90,23 @@ public class recent_message extends AppCompatActivity {
 
                 switch (item.getItemId()) {
                     case R.id.page_1:
-                        Msg.showText(mContext, "You reclick the page 1");
+                        // Msg.showText(mContext, "You reclick the page 1");
                         break;
                     case R.id.page_2:
-                        Msg.showText(mContext, "You reclick the page 2");
+                        // Msg.showText(mContext, "You reclick the page 2");
                         break;
                     default:
                         break;
                 }
             }
         });
-
     }
+
+    private void clearIcon(BottomNavigationView btw) {
+        btw.getMenu().findItem(R.id.page_1).setIcon(R.drawable.baseline_chat_bubble_outline_24);
+        btw.getMenu().findItem(R.id.page_2).setIcon(R.drawable.outline_account_circle_24);
+    }
+
 
     private void initPeos() {
         peoList.add(new Peo("朱一龙", R.drawable.n1));
