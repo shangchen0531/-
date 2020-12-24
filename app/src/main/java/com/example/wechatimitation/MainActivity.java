@@ -57,6 +57,11 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String userIDText = e.getText().toString();
                 String userPwText = e2.getText().toString();
+
+                // 测试用
+                userIDText = "123";
+                userPwText = "123";
+
                 if (userID == null) {
                     msg("账号未注册");
                     Intent register_intent = new Intent(MainActivity.this, Register.class);
