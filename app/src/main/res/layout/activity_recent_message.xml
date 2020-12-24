@@ -8,10 +8,17 @@
     tools:context=".recent_message"
     android:orientation="vertical">
 
+    <include layout="@layout/activity_regular_appbar"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/app_bar"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recent_message_recyclerList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_below="@+id/app_bar"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
@@ -19,6 +26,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="#fff"
+        app:itemIconTint="@color/purple_200"
+        app:itemTextColor="@color/purple_200"
         app:menu="@menu/bottom_navigation_munu"/>
 
 </RelativeLayout>
