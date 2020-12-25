@@ -2,13 +2,18 @@ package com.example.wechatimitation;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -54,6 +59,11 @@ public class recent_message extends AppCompatActivity {
 
         BottomNavigationView btw = (BottomNavigationView) findViewById(R.id.bottom_navigation);
 
+        BadgeDrawable badge = btw.getOrCreateBadge(R.id.page_1);
+        badge.setVisible(true);
+
+        badge.setNumber(9999); // 设置消息数
+
         btw.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @SuppressLint("NonConstantResourceId")
             @Override
@@ -98,6 +108,33 @@ public class recent_message extends AppCompatActivity {
                     default:
                         break;
                 }
+            }
+        });
+
+        Toolbar tooAppbar = (Toolbar) findViewById(R.id.topAppBar);
+        tooAppbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @SuppressLint("NonConstantResourceId")
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.favorite:
+                        try {
+                            Weather weather = new Weather();
+                            Msg.showText(recent_message.this, "经度: " + weather.getLongitude() +
+                                    "纬度: " + weather.getLatitude());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+
+
+                        return true;
+                    case R.id.search:
+                        Msg.showText(recent_message.this, "click search");
+                        return true;
+                    default: break;
+                }
+                return false;
             }
         });
     }
