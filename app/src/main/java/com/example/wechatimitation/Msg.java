@@ -10,6 +10,8 @@ public class Msg {
     private String content;
     private int type;
 
+    public Msg(){}
+
     public Msg(String content, int type) {
         this.content = content;
         this.type = type;
@@ -19,8 +21,16 @@ public class Msg {
         return content;
     }
 
+    public void setContent(String content) {
+        this.content = content;
+    }
+
     public int getType() {
         return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     public static void showText(Context parent, String text) {
