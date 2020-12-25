@@ -29,11 +29,20 @@ public class recent_message extends AppCompatActivity {
     private Context mContext;
     private RecentAdapter recentAdapter;
     private PeoAdapter peoAdapter = null;
+    private Weather weather;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recent_message);
+
+        if (weather == null) {
+            try {
+                weather = new Weather();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 
         mContext = this;
 
@@ -113,21 +122,18 @@ public class recent_message extends AppCompatActivity {
 
         Toolbar tooAppbar = (Toolbar) findViewById(R.id.topAppBar);
         tooAppbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @SuppressLint("NonConstantResourceId")
+            @SuppressLint({"NonConstantResourceId", "DefaultLocale"})
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.favorite:
                         try {
-                            Weather weather = new Weather();
-                            Msg.showText(recent_message.this, "经度: " + weather.getLongitude() +
-                                    "纬度: " + weather.getLatitude());
+                            Msg.showText(recent_message.this, String.format(
+                                    "温度：%f℃\n天气情况：%s",
+                                    weather.getTemperature(), weather.getSkycon()));
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-
-
-
                         return true;
                     case R.id.search:
                         Msg.showText(recent_message.this, "click search");
