@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".Chatting"
     android:orientation="vertical"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="false">
 
     <LinearLayout
         android:layout_width="match_parent"

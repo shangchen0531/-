@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
@@ -23,11 +24,13 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private String userID = "123";
     private String userPW = "123";
+    private AndroidServer ad;
 
 //    TextView responseText;
 //    private final String IP = "118.89.245.32";
@@ -36,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // JSONObject js = new JSONObject("\uFEFF\uFEFF\uFEFF\uFEFF\uFEFF{'status':-1}")
 
         TextView t = (TextView) this.findViewById(R.id.user_mark);
         final EditText e = (EditText) this.findViewById(R.id.user_text);
@@ -72,28 +77,47 @@ public class MainActivity extends AppCompatActivity {
                 String userPwText = e2.getText().toString();
 
                 // 测试用
-                userIDText = "123";
-                userPwText = "123";
-
-                if (userID == null) {
-                    msg("账号未注册");
-                    Intent register_intent = new Intent(MainActivity.this, Register.class);
-                    startActivityForResult(register_intent, 1);
-                } else if (userIDText.isEmpty() && userPwText.isEmpty()) {
-                    msg("请输入账号和密码");
-                } else if (userIDText.isEmpty()) {
-                    msg("请输入账号");
-                } else if (userPwText.isEmpty()) {
-                    msg("请输入密码");
-                } else if (userIDText.compareTo(userID) == 0 && userPwText.compareTo(userPW) == 0) {
-//                    Toast.makeText(MainActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
-
-                    Intent contact = new Intent(MainActivity.this, recent_message.class);
-                    startActivity(contact);
-
-                } else {
-                    msg("账号或密码错误，无法登录");
+//                userIDText = "123";
+//                userPwText = "123";
+                if (ad == null) {
+                    ad = new AndroidServer();
                 }
+                int status = ad.login(userIDText, userPwText);
+                switch (status) {
+                    case 0:
+                        Msg.showText(MainActivity.this, "用户不存在");
+                        break;
+                    case -1:
+                        Msg.showText(MainActivity.this, "用户密码错误");
+                        break;
+                    case 1:
+                        Msg.showText(MainActivity.this, "登录成功");
+                        List<Friend> result = ad.getContactsByUserName(userIDText);
+//                        Intent contact = new Intent(MainActivity.this, recent_message.class);
+//                        startActivity(contact);
+                        break;
+                    default: Msg.showText(MainActivity.this, "未知错误");
+                }
+
+//                if (userID == null) {
+//                    msg("账号未注册");
+//                    Intent register_intent = new Intent(MainActivity.this, Register.class);
+//                    startActivityForResult(register_intent, 1);
+//                } else if (userIDText.isEmpty() && userPwText.isEmpty()) {
+//                    msg("请输入账号和密码");
+//                } else if (userIDText.isEmpty()) {
+//                    msg("请输入账号");
+//                } else if (userPwText.isEmpty()) {
+//                    msg("请输入密码");
+//                } else if (userIDText.compareTo(userID) == 0 && userPwText.compareTo(userPW) == 0) {
+////                    Toast.makeText(MainActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
+//
+//                    Intent contact = new Intent(MainActivity.this, recent_message.class);
+//                    startActivity(contact);
+//
+//                } else {
+//                    msg("账号或密码错误，无法登录");
+//                }
             }
         });
 

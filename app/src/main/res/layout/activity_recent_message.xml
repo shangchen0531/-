@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".recent_message"
     android:orientation="vertical"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="false">
 
     <include layout="@layout/activity_regular_appbar"
         android:layout_alignParentTop="true"

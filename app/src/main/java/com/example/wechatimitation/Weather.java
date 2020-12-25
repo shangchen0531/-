@@ -20,38 +20,38 @@ import okhttp3.Response;
 public class Weather {
 
     private final String token = "RvkRaE06QE8z5Yjp";
-    private double longitude; // 经度
-    private double latitude; // 纬度
+    private final double longitude = 113.763; // 经度
+    private final double latitude = 23.379; // 纬度
     private String skycon;  // 天气情况
     private double temperature; // 温度
 
 
     public Weather() throws InterruptedException {
 
-        Thread tt = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    OkHttpClient client = new OkHttpClient();
-                    Request request = new Request.Builder()
-                            .url("http://ip-api.com/json/")
-                            .build();
-                    Response response = client.newCall(request).execute();
-                    String resposeData = response.body().string();
-                    // Log.d("weather", resposeData);
-                    JSONObject object = new JSONObject(resposeData);
-                    longitude = object.getDouble("lon");
-                    latitude = object.getDouble("lat");
-                    // Log.d("lat", object.getDouble("lat") + "");
-                    // Log.d("lon", object.getDouble("lon") + "");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
-        tt.start();
-        tt.join();
+//        Thread tt = new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    OkHttpClient client = new OkHttpClient();
+//                    Request request = new Request.Builder()
+//                            .url("http://ip-api.com/json/")
+//                            .build();
+//                    Response response = client.newCall(request).execute();
+//                    String resposeData = response.body().string();
+//                    // Log.d("weather", resposeData);
+//                    JSONObject object = new JSONObject(resposeData);
+//                    longitude = object.getDouble("lon");
+//                    latitude = object.getDouble("lat");
+//                    // Log.d("lat", object.getDouble("lat") + "");
+//                    // Log.d("lon", object.getDouble("lon") + "");
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
+//
+//        tt.start();
+//        tt.join();
 
         // Log.d("lat", latitude + "");
         // Log.d("lon", longitude + "");
@@ -89,9 +89,13 @@ public class Weather {
 
                     JSONObject object = new JSONObject(resposeData);
 
+                    Log.d("result", resposeData);
+
                     String result = object.getJSONObject("result")
                             .getJSONObject("realtime")
-                            .getString("result");
+                            .getString("status");
+                    Log.d("weather_status", result);
+
                     if (! result.equals("ok")) {
                         skycon = "未知";
                         temperature = -1;

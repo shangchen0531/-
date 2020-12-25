@@ -5,6 +5,7 @@ import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,9 +17,11 @@ import okhttp3.Response;
 
 public final class AndroidServer {
     private final String IP = "118.89.245.32";
-    private final String uurl = "http://" + IP + "/AndroidServer/index.php";
-    private final OkHttpClient client;
-    private final Gson gson;
+    private final String uurl = "http://" + IP + "/AndroidServer/index2.php";
+    private OkHttpClient client;
+    private Gson gson;
+    private Response response;
+    private final Character UTF8_BOM = '\uFEFF';
 
     private final static String PARA_GET_PEO_BY_USERNAME = "10086";
     private final static String PARA_GET_MES_BY_TWO_USERNAME = "10087";
@@ -34,13 +37,19 @@ public final class AndroidServer {
 
     public List<Friend> getContactsByUserName(String userName) {
         RequestBody requestBody = new FormBody.Builder()
-                .add("_username", userName)
+                .add("_userName", userName)
                 .add("_parameter", PARA_GET_PEO_BY_USERNAME)
                 .build();
         String result = postToServer(requestBody);
+        result = removeUTF8BOM(result);
 
         // parseJSONWithGSON
-        return gson.fromJson(result, new TypeToken<List<Friend>>(){}.getType());
+        try {
+            return gson.fromJson(result, new TypeToken<List<Friend>>(){}.getType());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public List<Msg> getMsgByTwoUserName(String selfName, String friendName) {
@@ -50,6 +59,7 @@ public final class AndroidServer {
                 .add("_parameter", PARA_GET_MES_BY_TWO_USERNAME)
                 .build();
         String result = postToServer(requestBody);
+        result = removeUTF8BOM(result);
 
         // parseJSONWithGSON
         return gson.fromJson(result, new TypeToken<List<Msg>>(){}.getType());
@@ -62,9 +72,11 @@ public final class AndroidServer {
                 .add("_parameter", PARA_LOGIN)
                 .build();
         String result = postToServer(requestBody);
+        result = removeUTF8BOM(result);
 
         // parseJSONWithJSONObject
         try {
+            result = removeUTF8BOM(result);
             JSONObject jsonObject = new JSONObject(result);
             int status = jsonObject.getInt("status");
             // 0: 用户未注册，-1：用户密码错误，1：用户账户和密码正确
@@ -75,6 +87,64 @@ public final class AndroidServer {
         return 0;
     }
 
+    public Boolean register(String userName, String userPass) {
+        RequestBody requestBody = new FormBody.Builder()
+                .add("_userName", userName)
+                .add("_userPassword", userPass)
+                .add("_parameter", PARA_REGISTER)
+                .build();
+        String result = postToServer(requestBody);
+        result = removeUTF8BOM(result);
+        try {
+            JSONObject jsonObject = new JSONObject(result);
+            boolean status = jsonObject.getBoolean("status");
+            // false: 注册失败，true：注册成功
+            return status;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public Boolean addFriend(String userName, String friendName) {
+        RequestBody requestBody = new FormBody.Builder()
+                .add("_userName", userName)
+                .add("_friendName", friendName)
+                .add("_parameter", PARA_ADD_FRIEND)
+                .build();
+        String result = postToServer(requestBody);
+        result = removeUTF8BOM(result);
+        try {
+            JSONObject jsonObject = new JSONObject(result);
+            boolean status = jsonObject.getBoolean("status");
+            // false: 添加失败，true：添加成功
+            return status;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public Boolean chat(String userName, String friendName, String content) {
+        RequestBody requestBody = new FormBody.Builder()
+                .add("_userName", userName)
+                .add("_friendName", friendName)
+                .add("_content", content)
+                .add("_parameter", PARA_CHAT)
+                .build();
+        String result = postToServer(requestBody);
+        result = removeUTF8BOM(result);
+        try {
+            JSONObject jsonObject = new JSONObject(result);
+            boolean status = jsonObject.getBoolean("status");
+            // false: 发送失败，true：发送成功
+            return status;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public String postToServer(RequestBody body){
 
         try {
@@ -82,7 +152,19 @@ public final class AndroidServer {
                     .url(uurl)
                     .post(body)
                     .build();
-            Response response = client.newCall(request).execute();
+
+            Thread tt = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        response = client.newCall(request).execute();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+            tt.start();
+            tt.join();
             return response.body().string();
         } catch (Exception e) {
             e.printStackTrace();
@@ -90,5 +172,11 @@ public final class AndroidServer {
         return null;
     }
 
-
+    private String removeUTF8BOM(String s) {
+        int idx = 0;
+        while (s.charAt(idx) == UTF8_BOM) {
+            ++idx;
+        }
+        return s.substring(idx);
+    }
 }

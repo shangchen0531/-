@@ -129,7 +129,7 @@ public class recent_message extends AppCompatActivity {
                     case R.id.favorite:
                         try {
                             Msg.showText(recent_message.this, String.format(
-                                    "温度：%f℃\n天气情况：%s",
+                                    "\n温度：%.2f℃\n天气情况：%s",
                                     weather.getTemperature(), weather.getSkycon()));
                         } catch (Exception e) {
                             e.printStackTrace();
