@@ -6,6 +6,7 @@ import com.google.gson.reflect.TypeToken;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +16,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public final class AndroidServer {
+public final class AndroidServer implements Serializable {
     private final String IP = "118.89.245.32";
     private final String uurl = "http://" + IP + "/AndroidServer/index2.php";
     private OkHttpClient client;

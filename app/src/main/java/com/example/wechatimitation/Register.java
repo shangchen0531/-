@@ -10,12 +10,20 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.gson.Gson;
+
 public class Register extends AppCompatActivity {
+
+    private AndroidServer ad;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register);
+
+        if (ad == null) {
+            ad = new AndroidServer();
+        }
 
         TextView btn_return = (TextView) findViewById(R.id.btn_return);
         btn_return.setOnClickListener(new View.OnClickListener() {
@@ -46,11 +54,13 @@ public class Register extends AppCompatActivity {
                     msg("请再次输入密码");
                 } else {
                     if (userPw.compareTo(userPw_sure) == 0) {
-                        Intent data = new Intent();
-                        data.putExtra("userID", userID);
-                        data.putExtra("userPw", userPw);
-                        setResult(RESULT_OK, data);
-                        finish();
+//                        Intent data = new Intent();
+//                        data.putExtra("userID", userID);
+//                        data.putExtra("userPw", userPw);
+//                        setResult(RESULT_OK, data);
+//                        finish();
+                        Boolean status = ad.register(userID, userPw);
+                        msg("注册状态: " + (status ? "成功" : "失败"));
                     }
                     else {
                         msg("两次输入密码不一致");

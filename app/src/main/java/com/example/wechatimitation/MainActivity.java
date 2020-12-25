@@ -14,6 +14,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
@@ -40,6 +42,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        if (ad == null) {
+            ad = new AndroidServer();
+        }
+
         // JSONObject js = new JSONObject("\uFEFF\uFEFF\uFEFF\uFEFF\uFEFF{'status':-1}")
 
         TextView t = (TextView) this.findViewById(R.id.user_mark);
@@ -64,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent register_intent = new Intent(MainActivity.this, Register.class);
-                startActivityForResult(register_intent, 1);
+                startActivity(register_intent);
             }
         });
 
@@ -79,9 +85,7 @@ public class MainActivity extends AppCompatActivity {
                 // 测试用
 //                userIDText = "123";
 //                userPwText = "123";
-                if (ad == null) {
-                    ad = new AndroidServer();
-                }
+
                 int status = ad.login(userIDText, userPwText);
                 switch (status) {
                     case 0:
@@ -92,7 +96,6 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case 1:
                         Msg.showText(MainActivity.this, "登录成功");
-                        List<Friend> result = ad.getContactsByUserName(userIDText);
 //                        Intent contact = new Intent(MainActivity.this, recent_message.class);
 //                        startActivity(contact);
                         break;
@@ -187,22 +190,22 @@ public class MainActivity extends AppCompatActivity {
 //        });
 //    }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case 1:
-                if (resultCode == RESULT_OK) {
-                    String userID_got = data.getStringExtra("userID");
-                    String userPw_got = data.getStringExtra("userPw");
-                    userID = userID_got;
-                    userPW = userPw_got;
-                    msg("注册成功, 请再次输入账号密码登录");
-                }
-                break;
-            default:
-        }
-    }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        switch (requestCode) {
+//            case 1:
+//                if (resultCode == RESULT_OK) {
+//                    String userID_got = data.getStringExtra("userID");
+//                    String userPw_got = data.getStringExtra("userPw");
+//                    userID = userID_got;
+//                    userPW = userPw_got;
+//                    msg("注册成功, 请再次输入账号密码登录");
+//                }
+//                break;
+//            default:
+//        }
+//    }
 
     /**
      * 设置 hint字体大小
