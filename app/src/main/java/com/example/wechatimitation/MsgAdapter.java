@@ -46,9 +46,11 @@ public class MsgAdapter extends RecyclerView.Adapter<MsgAdapter.ViewHolder> {
         }
     }
 
-    public MsgAdapter(List<Msg> msgList, String rName, int rImg) {
+    public MsgAdapter(List<Msg> msgList, String rName, int rImg, String sName, int sImg) {
         this.received_name = rName;
-        this.received_img =rImg;
+        this.received_img = rImg;
+        this.sent_name = sName;
+        this.sent_img = sImg;
         this.msgList = msgList;
     }
 

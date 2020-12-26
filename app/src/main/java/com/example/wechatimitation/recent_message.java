@@ -39,14 +39,6 @@ public class recent_message extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recent_message);
 
-        if (weather == null) {
-            try {
-                weather = new Weather();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
         mContext = this;
 
         if (ad == null) {
@@ -57,9 +49,9 @@ public class recent_message extends AppCompatActivity {
             userIDText = getIntent().getStringExtra("userName");
             if (userIDText == null) {
                 userIDText = savedInstanceState.getString("userName");
-            }
-            else {
-                userIDText = "10086";
+                if (userIDText == null) {
+                    userIDText = "10086";
+                }
             }
         }
 
@@ -148,6 +140,9 @@ public class recent_message extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.favorite:
                         try {
+                            if (weather == null) {
+                                weather = new Weather();
+                            }
                             Msg.showText(recent_message.this, String.format(
                                     "\n温度：%.2f℃\n天气情况：%s",
                                     weather.getTemperature(), weather.getSkycon()));
@@ -303,7 +298,7 @@ public class recent_message extends AppCompatActivity {
 //                new Date(2020 - 1900, 11 - 1, 26, 10, 28)));
         List<Msg> msgList = null;
         Friend friend = null;
-        for (int i = 1; i < peoList.size(); i++) {
+        for (int i = 0; i < peoList.size(); i++) {
             friend = peoList.get(i);
 
             // 时间按从大到小排序
