@@ -3,8 +3,9 @@
     <string name="page_title">微信</string>
     <string name="favorite">favorite</string>
     <string name="search">search</string>
-    <string name="more">more</string>
+    <string name="more">添加好友</string>
     <string name="content_description_favorite">favorite</string>
     <string name="content_description_search">search</string>
     <string name="content_description_more">more</string>
+    <string name="text_hint">密码和用户名请不要包含特殊符号</string>
 </resources>

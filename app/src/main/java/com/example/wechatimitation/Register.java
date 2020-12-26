@@ -47,23 +47,18 @@ public class Register extends AppCompatActivity {
                 String userPw_sure = userPw_sure_register.getText().toString();
 
                 if (userID.isEmpty()) {
-                    msg("账号不能为空");
+                    Msg.showText(Register.this, "账号不能为空");
                 } else if (userPw.isEmpty()) {
-                    msg("密码不能为空");
+                    Msg.showText(Register.this, "密码不能为空");
                 } else if (userPw_sure.isEmpty()) {
-                    msg("请再次输入密码");
+                    Msg.showText(Register.this, "请再次输入密码");
                 } else {
                     if (userPw.compareTo(userPw_sure) == 0) {
-//                        Intent data = new Intent();
-//                        data.putExtra("userID", userID);
-//                        data.putExtra("userPw", userPw);
-//                        setResult(RESULT_OK, data);
-//                        finish();
                         Boolean status = ad.register(userID, userPw);
-                        msg("注册状态: " + (status ? "成功" : "失败"));
+                        Msg.showText(Register.this, (status ? "成功" : "失败"));
                     }
                     else {
-                        msg("两次输入密码不一致");
+                        Msg.showText(Register.this, "两次输入密码不一致");
                     }
                 }
             }

@@ -1,5 +1,6 @@
 package com.example.wechatimitation;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -30,8 +31,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private String userID = "123";
-    private String userPW = "123";
+//    private String userID = null;
+//    private String userPW = "123";
     private AndroidServer ad;
 
 //    TextView responseText;
@@ -82,24 +83,28 @@ public class MainActivity extends AppCompatActivity {
                 String userIDText = e.getText().toString();
                 String userPwText = e2.getText().toString();
 
-                // 测试用
-//                userIDText = "123";
-//                userPwText = "123";
+                if (userPwText.contains("'") || userPwText.contains("\"")) {
+                    Msg.showText(MainActivity.this, "密码内不要包含引号");
+                }
+                else {
+                    int status = ad.login(userIDText, userPwText);
+                    switch (status) {
+                        case 0:
+                            Msg.showText(MainActivity.this, "用户不存在");
+                            break;
+                        case -1:
+                            Msg.showText(MainActivity.this, "用户密码错误");
+                            break;
+                        case 1:
+                            Msg.showText(MainActivity.this, "登录成功");
 
-                int status = ad.login(userIDText, userPwText);
-                switch (status) {
-                    case 0:
-                        Msg.showText(MainActivity.this, "用户不存在");
-                        break;
-                    case -1:
-                        Msg.showText(MainActivity.this, "用户密码错误");
-                        break;
-                    case 1:
-                        Msg.showText(MainActivity.this, "登录成功");
-//                        Intent contact = new Intent(MainActivity.this, recent_message.class);
-//                        startActivity(contact);
-                        break;
-                    default: Msg.showText(MainActivity.this, "未知错误");
+                            //List<Msg> mm = ad.getMsgByTwoUserName(userIDText, "10087");
+                            Intent contact = new Intent(MainActivity.this, recent_message.class);
+                            contact.putExtra("userName", userIDText);
+                            startActivity(contact);
+                            break;
+                        default: Msg.showText(MainActivity.this, "未知错误");
+                    }
                 }
 
 //                if (userID == null) {
@@ -125,6 +130,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+
+
 //        Button sendRequest = (Button) findViewById(R.id.btn_test);
 //        responseText = (TextView) findViewById(R.id.result_test);
 //        sendRequest.setOnClickListener(new View.OnClickListener() {
@@ -137,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
 //        });
     }
 
-//    private void sendRequestWithHttpURLConnection() {
+    //    private void sendRequestWithHttpURLConnection() {
 //        // 开启线程来发起网络请求
 //        new Thread(new Runnable() {
 //            @Override
@@ -225,14 +232,4 @@ public class MainActivity extends AppCompatActivity {
         editText.setHint(new SpannableString(ss)); // 一定要进行转换，否则属性会消失
     }
 
-    /**
-     * Toast显示消息
-     * @param m 欲打印的消息;
-     */
-
-    private void msg(String m) {
-        Toast tt = Toast.makeText(MainActivity.this, m, Toast.LENGTH_SHORT);
-        tt.show();
-        tt = null;
-    }
 }

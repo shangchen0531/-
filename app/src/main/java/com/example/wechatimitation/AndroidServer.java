@@ -16,7 +16,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public final class AndroidServer implements Serializable {
+public final class AndroidServer {
     private final String IP = "118.89.245.32";
     private final String uurl = "http://" + IP + "/AndroidServer/index2.php";
     private OkHttpClient client;
@@ -41,11 +41,11 @@ public final class AndroidServer implements Serializable {
                 .add("_userName", userName)
                 .add("_parameter", PARA_GET_PEO_BY_USERNAME)
                 .build();
-        String result = postToServer(requestBody);
-        result = removeUTF8BOM(result);
 
         // parseJSONWithGSON
         try {
+            String result = postToServer(requestBody);
+            result = removeUTF8BOM(result);
             return gson.fromJson(result, new TypeToken<List<Friend>>(){}.getType());
         } catch (Exception e) {
             e.printStackTrace();
@@ -59,11 +59,16 @@ public final class AndroidServer implements Serializable {
                 .add("_friendName", friendName)
                 .add("_parameter", PARA_GET_MES_BY_TWO_USERNAME)
                 .build();
-        String result = postToServer(requestBody);
-        result = removeUTF8BOM(result);
 
         // parseJSONWithGSON
-        return gson.fromJson(result, new TypeToken<List<Msg>>(){}.getType());
+        try {
+            String result = postToServer(requestBody);
+            result = removeUTF8BOM(result);
+            return gson.fromJson(result, new TypeToken<List<Msg>>(){}.getType());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public int login(String userName, String userPassword) {
@@ -72,11 +77,10 @@ public final class AndroidServer implements Serializable {
                 .add("_userPassword", userPassword)
                 .add("_parameter", PARA_LOGIN)
                 .build();
-        String result = postToServer(requestBody);
-        result = removeUTF8BOM(result);
 
         // parseJSONWithJSONObject
         try {
+            String result = postToServer(requestBody);
             result = removeUTF8BOM(result);
             JSONObject jsonObject = new JSONObject(result);
             int status = jsonObject.getInt("status");
@@ -89,14 +93,22 @@ public final class AndroidServer implements Serializable {
     }
 
     public Boolean register(String userName, String userPass) {
+
+        // 需要检测密码不是引号，单双都不行
+
+        if (userPass.contains("'") || userPass.contains("\"")){
+            return false;
+        }
+
         RequestBody requestBody = new FormBody.Builder()
                 .add("_userName", userName)
                 .add("_userPassword", userPass)
                 .add("_parameter", PARA_REGISTER)
                 .build();
-        String result = postToServer(requestBody);
-        result = removeUTF8BOM(result);
+
         try {
+            String result = postToServer(requestBody);
+            result = removeUTF8BOM(result);
             JSONObject jsonObject = new JSONObject(result);
             boolean status = jsonObject.getBoolean("status");
             // false: 注册失败，true：注册成功
@@ -113,9 +125,10 @@ public final class AndroidServer implements Serializable {
                 .add("_friendName", friendName)
                 .add("_parameter", PARA_ADD_FRIEND)
                 .build();
-        String result = postToServer(requestBody);
-        result = removeUTF8BOM(result);
+
         try {
+            String result = postToServer(requestBody);
+            result = removeUTF8BOM(result);
             JSONObject jsonObject = new JSONObject(result);
             boolean status = jsonObject.getBoolean("status");
             // false: 添加失败，true：添加成功
@@ -133,9 +146,10 @@ public final class AndroidServer implements Serializable {
                 .add("_content", content)
                 .add("_parameter", PARA_CHAT)
                 .build();
-        String result = postToServer(requestBody);
-        result = removeUTF8BOM(result);
+
         try {
+            String result = postToServer(requestBody);
+            result = removeUTF8BOM(result);
             JSONObject jsonObject = new JSONObject(result);
             boolean status = jsonObject.getBoolean("status");
             // false: 发送失败，true：发送成功

@@ -4,21 +4,36 @@ import java.util.Date;
 
 public class Recent_Msg {
 
-    private Peo recent_peo;
+//    private Peo recent_peo;
+    private Friend recent_peo;
     private Date recent_time;
     private Msg recent_msg;
 
-    Recent_Msg(Peo peo, Msg msg, Date date) {
+//    Recent_Msg(Peo peo, Msg msg, Date date) {
+//        this.recent_peo = peo;
+//        this.recent_msg = msg;
+//        this.recent_time = date;
+//    }
+
+    Recent_Msg(Friend peo, Msg msg, Date date) {
         this.recent_peo = peo;
         this.recent_msg = msg;
         this.recent_time = date;
     }
 
-    public Peo getRecent_peo() {
+//    public Peo getRecent_peo() {
+//        return recent_peo;
+//    }
+
+//    public void setRecent_peo(Peo recent_peo) {
+//        this.recent_peo = recent_peo;
+//    }
+
+    public Friend getRecent_peo() {
         return recent_peo;
     }
 
-    public void setRecent_peo(Peo recent_peo) {
+    public void setRecent_peo(Friend recent_peo) {
         this.recent_peo = recent_peo;
     }
 

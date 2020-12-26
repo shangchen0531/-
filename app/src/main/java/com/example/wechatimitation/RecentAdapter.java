@@ -19,6 +19,7 @@ import java.util.TimeZone;
 public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder> {
 
     private List<Recent_Msg> msgList;
+    private String my_name;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -38,8 +39,9 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder
         }
     }
 
-    public RecentAdapter(List<Recent_Msg> mList) {
+    public RecentAdapter(List<Recent_Msg> mList, String myname) {
         this.msgList = mList;
+        this.my_name = myname;
     }
 
     @NonNull
@@ -59,6 +61,7 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder
 
                 intent.putExtra("contactsName", contact_name);
                 intent.putExtra("contactsImage", imageId);
+                intent.putExtra("myName", my_name);
 
                 v.getContext().startActivity(intent);
             }
@@ -70,9 +73,13 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Recent_Msg msg = msgList.get(position);
-        holder.niceImageView.setImageResource(msg.getRecent_peo().getImageId());
-        holder.niceImageView.setTag(R.integer.id_key, msg.getRecent_peo().getImageId());
-        holder.recentName.setText(msg.getRecent_peo().getName());
+        int img_id = msg.getRecent_peo().getUser_img();
+        if (img_id == -1) {
+            img_id = R.drawable.profile;
+        }
+        holder.niceImageView.setImageResource(img_id);
+        holder.niceImageView.setTag(R.integer.id_key, img_id);
+        holder.recentName.setText(msg.getRecent_peo().getUser_name());
         holder.recentMsg.setText(msg.getRecent_msg().getContent());
         holder.recentTime.setText(dealTime(msg.getRecent_time()));
     }
