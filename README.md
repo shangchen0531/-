@@ -1,0 +1,2 @@
+# WechatImitation
+An Android homework.
